@@ -1,13 +1,14 @@
 const nodemailer = require("nodemailer");
 const express = require("express");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 5000
 
-const server = express();
+const app = express();
 
-server.use(express.json());
+app.use(express.json());
 
-server.post("/contact", (req, res) => {
+app.post("/contact", cors(), (req, res) => {
   if (!("name" in req.body)) {
     res.status(400).send("Name required");
   } else if (!("email" in req.body)) {
@@ -23,7 +24,7 @@ server.post("/contact", (req, res) => {
   }
 });
 
-server.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 function sendMail(name, email, message) {
   const transporter = nodemailer.createTransport({
