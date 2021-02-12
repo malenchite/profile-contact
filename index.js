@@ -6,9 +6,11 @@ const PORT = process.env.PORT || 5000
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 
-app.post("/contact", cors(), (req, res) => {
+app.post("/contact", (req, res) => {
   if (!("name" in req.body)) {
     res.status(400).send("Name required");
   } else if (!("email" in req.body)) {
