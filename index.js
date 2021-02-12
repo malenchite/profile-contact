@@ -18,7 +18,7 @@ app.post("/contact", (req, res) => {
   } else if (!("message" in req.body)) {
     res.status(400).send("Message required");
   } else if (process.env.PERMITTEDHOSTS.split(" ").indexOf(req.hostname) < 0) {
-    res.status(403).send("Access forbidden");
+    res.status(403).send(`Access forbidden: ${req.hostname}`);
   } else {
     sendMail(req.body.name, req.body.email, req.body.message)
       .then(() => res.status(200).send({ msg: "SUCCESS" }))
