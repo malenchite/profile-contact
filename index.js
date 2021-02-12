@@ -6,7 +6,12 @@ const PORT = process.env.PORT || 5000
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.PERMITTEDHOSTS.split(" "),
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -17,8 +22,6 @@ app.post("/contact", (req, res) => {
     res.status(400).send("Email required");
   } else if (!("message" in req.body)) {
     res.status(400).send("Message required");
-  } else if (process.env.PERMITTEDHOSTS.split(" ").indexOf(req.origin) < 0) {
-    res.status(403).send(`Access forbidden: ${req.origin}`);
   } else {
     sendMail(req.body.name, req.body.email, req.body.message)
       .then(() => res.status(200).send({ msg: "SUCCESS" }))
