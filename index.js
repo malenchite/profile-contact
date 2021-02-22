@@ -11,10 +11,11 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
+/* Middleware */
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
+/* Primary API route */
 app.post("/contact", (req, res) => {
   if (!("name" in req.body)) {
     res.status(400).send("Name required");
@@ -24,13 +25,15 @@ app.post("/contact", (req, res) => {
     res.status(400).send("Message required");
   } else {
     sendMail(req.body.name, req.body.email, req.body.message)
-      .then(() => res.status(200).send({ msg: "SUCCESS" }))
-      .catch((err) => res.send({ err }));
+      .then(() => res.status(200).send("SUCCESS"))
+      .catch((err) => res.status(502).send({ err }));
   }
 });
 
+/* Start server */
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+/* Sends email to Yahoo SMTP server */
 function sendMail(name, email, message) {
   const transporter = nodemailer.createTransport({
     service: "Yahoo",

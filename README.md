@@ -40,7 +40,7 @@ The API for this application is very simple. It only accepts a POST message to t
 }
 ```
 
-On success, the API will return status code 200 with a JSON body of msg: "SUCCESS". If any of the POST components are missing, it will return status code 400 with a string explaining what is missing.
+On success, the API will return status code 200 with the string "SUCCESS". If any of the POST components are missing, it will return status code 400 with a string explaining what is missing. If there is an error in the SMTP processing, it will return status code 502 with the error as a JSON object.
 
 ## License  
 This application is covered under the **ISC** license. More info can be found here: [ISC](https://opensource.org/licenses/ISC)
