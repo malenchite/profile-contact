@@ -5,12 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
+    "eslint": "^7.21.0",
     "express": "^4.17.1",
     "nodemailer": "^6.4.18"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "npm run lint",
+    "lint": "eslint --quiet"
   },
   "repository": {
     "type": "git",
